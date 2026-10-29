@@ -1,0 +1,19 @@
+# Build folder
+build
+
+# Cache
+.cache
+
+# Emniscripten
+.venv
+
+# Debugger
+.gdb_history
+
+
+# Krita specific
+resources/*autosave.kra
+resources/*~
+
+# Renoise specific
+resources/*.time-report.txt
