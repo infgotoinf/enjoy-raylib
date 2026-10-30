@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
+// #define RAYGUI_IMPLEMENTATION
+// #include "raygui.h"
 
 
 
@@ -35,7 +35,7 @@ int main ()
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World from Raylib");
 
     // Set text size for raygui elements
-    GuiSetStyle(DEFAULT, TEXT_SIZE, GUI_TEXT_SIZE);
+    // GuiSetStyle(DEFAULT, TEXT_SIZE, GUI_TEXT_SIZE);
 
     // Load a texture from the resources directory
     Texture logo = LoadTexture("resources/logo.png");
@@ -57,19 +57,20 @@ int main ()
             Vector2 logo_pos = { (WINDOW_WIDTH - logo.width) * 0.5, 100 };
             DrawTexture(logo, logo_pos.x, logo_pos.y, WHITE);
 
-            static int BUTTON_WIDTH = 200;
-            if (GuiButton((Rectangle){ logo_pos.x + logo.width * 0.5 - BUTTON_WIDTH * 0.5
-                                     , logo_pos.y + logo.height + 100
-                                     , BUTTON_WIDTH
-                                     , GUI_TEXT_SIZE + GUI_TEXT_MARGIN }, "Play"))
-            {
-                show_text = !show_text;
-            }
-
-            if (show_text)
-            {
-                DrawText("Hello, World!", 200, WINDOW_HEIGHT - 100, GUI_TEXT_SIZE, WHITE);
-            }
+            // Draw raygui button
+            // static int BUTTON_WIDTH = 200;
+            // if (GuiButton((Rectangle){ logo_pos.x + logo.width * 0.5 - BUTTON_WIDTH * 0.5
+            //                          , logo_pos.y + logo.height + 100
+            //                          , BUTTON_WIDTH
+            //                          , GUI_TEXT_SIZE + GUI_TEXT_MARGIN }, "Play"))
+            // {
+            //     show_text = !show_text;
+            // }
+            // if (show_text)
+            // {
+            //     DrawText("Hello, World!", 200, WINDOW_HEIGHT - 200, GUI_TEXT_SIZE, WHITE);
+            // }
+            DrawText("Hello, World!", 200, WINDOW_HEIGHT - 100, GUI_TEXT_SIZE, WHITE);
 
         EndDrawing();
     }

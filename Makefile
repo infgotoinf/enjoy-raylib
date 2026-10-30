@@ -11,6 +11,18 @@ PLATFORM   ?= Desktop
 BUILD_TYPE ?= Debug
 # BUILD_TYPE ?= Release
 
+# Changes might not apply after you set some dependency to false if you use ccache for compilation.
+# If so, you can make some changes to the code where the dependency was used (so it forces itself to recompile)
+# Or clear the cache with: ccache -C
+USE_RAYLIB ?= TRUE
+# USE_RAYGUI ?= TRUE
+USE_RAYGUI ?= FALSE
+
+# https://github.com/raysan5/raylib/releases
+RAYLIB_VERSION ?= 6.2
+# https://github.com/raysan5/raygui/releases
+RAYGUI_VERSION ?= 5.0
+
 CMAKE_C_COMPILER_LAUNCHER   ?= ccache
 CMAKE_CXX_COMPILER_LAUNCHER ?= ccache
 CMAKE_C_STANDARD   ?= 23
@@ -25,6 +37,8 @@ all: help
 build:
 	cmake -B $(BUILD_DIR) -DPROJECT_NAME=$(PROJECT_NAME) -DPROJECT_LANGUAGE=$(PROJECT_LANGUAGE) \
 		-DPLATFORM=$(PLATFORM) -DBUILD_TYPE=$(BUILD_TYPE) \
+		-DUSE_RAYLIB=$(USE_RAYLIB) -DUSE_RAYGUI=$(USE_RAYGUI) \
+		-DRAYLIB_VERSION=$(RAYLIB_VERSION) -DRAYGUI_VERSION=$(RAYGUI_VERSION) \
 		-DCMAKE_C_COMPILER_LAUNCHER=$(CMAKE_C_COMPILER_LAUNCHER) -DCMAKE_CXX_COMPILER_LAUNCHER=$(CMAKE_CXX_COMPILER_LAUNCHER) -DCMAKE_C_STANDARD=$(CMAKE_C_STANDARD) -DCMAKE_CXX_STANDARD=$(CMAKE_CXX_STANDARD) -DCMAKE_GENERATOR=$(CMAKE_GENERATOR)
 	cmake --build $(BUILD_DIR)
 
@@ -61,6 +75,22 @@ help:
 	@echo ""
 	@echo "  BUILD_DIR         Directory where the project will be built"
 	@echo "                    Current value: $(BUILD_DIR)"
+	@echo ""
+	@echo "Dependencies:"
+	@echo "  USE_RAYLIB  Whatever use or not to use raylib, a simple and easy-to-use library to enjoy videogames programming"
+	@echo "              Current value: $(USE_RAYLIB)"
+	@echo "              Possible values: TRUE, FALSE"
+	@echo ""
+	@echo "  USE_RAYGUI  Whatever use or not to use raygui, a simple and easy-to-use immediate-mode gui library for raylib"
+	@echo "              Current value: $(USE_RAYGUI)"
+	@echo "              Possible values: TRUE, FALSE"
+	@echo ""
+	@echo "Dependency settings:"
+	@echo "  RAYLIB_VERSION  Whatever raylib version to use (used only when library wasn't locally installed)"
+	@echo "                  Current value: $(RAYLIB_VERSION)"
+	@echo ""
+	@echo "  RAYGUI_VERSION  Whatever raygui version to use (used only when library wasn't locally installed)"
+	@echo "                  Current value: $(RAYGUI_VERSION)"
 	@echo ""
 	@echo "CMake variables:"
 	@echo "   CMAKE_C_COMPILER_LAUNCHER    Current value: $(CMAKE_C_COMPILER_LAUNCHER)"

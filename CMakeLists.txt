@@ -5,6 +5,7 @@
 #       make
 #       make help
 #       make build
+#       make run
 #       make clean
 #
 ################################################################################
@@ -32,44 +33,8 @@ if (NOT ("${PLATFORM}" STREQUAL "Web" OR "${PLATFORM}" STREQUAL "Desktop"))
 endif()
 
 include(FetchContent)
-
-
-
-# === Dependencies ===
-set(RAYLIB_VERSION 6.2)
-set(RAYGUI_VERSION 5.0)
-
 set(FETCHCONTENT_QUIET FALSE) # Show download progress
-# Fetch raylib if it wasn't found
-FetchContent_Declare(
-    raylib
-    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
-    FIND_PACKAGE_ARGS
-)
 
-# Fetch raygui if pkgconfig and raygui wasn't found
-find_package(PkgConfig)
-if (PkgConfig_FOUND)
-    pkg_check_modules(raygui IMPORTED_TARGET raygui)
-endif()
-
-if (raygui_FOUND)
-    set(RAYGUI_TARGET PkgConfig::raygui)
-else()
-    FetchContent_Declare(
-        raygui
-        URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
-    )
-    FetchContent_MakeAvailable(raygui)
-
-    add_library(raygui_headers INTERFACE)
-    target_include_directories(raygui_headers INTERFACE
-        "${raygui_SOURCE_DIR}/src"
-    )
-    set(RAYGUI_TARGET raygui_headers)
-endif()
-
-FetchContent_MakeAvailable(raylib)
 
 
 # === Our project ===
@@ -81,9 +46,48 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 
 
-# --- Target link with dependencies ---
-set(raylib_VERBOSE 1)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib ${RAYGUI_TARGET})
+
+# === Dependencies ===
+if (${USE_RAYLIB} STREQUAL "TRUE")
+    # Fetch raylib if it wasn't found
+    FetchContent_Declare(
+        raylib
+        URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+        FIND_PACKAGE_ARGS
+    )
+
+    FetchContent_MakeAvailable(raylib)
+
+    set(raylib_VERBOSE TRUE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+endif()
+
+if (${USE_RAYGUI} STREQUAL "TRUE")
+    # Fetch raygui if pkgconfig and raygui wasn't found
+    find_package(PkgConfig)
+    if (PkgConfig_FOUND)
+        pkg_check_modules(raygui IMPORTED_TARGET raygui)
+    endif()
+
+    if (raygui_FOUND)
+        set(RAYGUI_TARGET PkgConfig::raygui)
+    else()
+        FetchContent_Declare(
+            raygui
+            URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
+        )
+        FetchContent_MakeAvailable(raygui)
+
+        add_library(raygui_headers INTERFACE)
+        target_include_directories(raygui_headers INTERFACE
+            "${raygui_SOURCE_DIR}/src"
+        )
+        set(RAYGUI_TARGET raygui_headers)
+    endif()
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${RAYGUI_TARGET})
+endif()
+
 
 
 # === Platform specific configurations ===
