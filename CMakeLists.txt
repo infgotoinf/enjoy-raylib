@@ -37,17 +37,39 @@ include(FetchContent)
 
 # === Dependencies ===
 set(RAYLIB_VERSION 6.2)
+set(RAYGUI_VERSION 5.0)
 
 set(FETCHCONTENT_QUIET FALSE) # Show download progress
-# Fetches raylib if it wasn't found
+# Fetch raylib if it wasn't found
 FetchContent_Declare(
     raylib
     URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
     FIND_PACKAGE_ARGS
 )
 
-FetchContent_MakeAvailable(raylib)
+# Fetch raygui if pkgconfig and raygui wasn't found
+find_package(PkgConfig)
+if (PkgConfig_FOUND)
+    pkg_check_modules(raygui IMPORTED_TARGET raygui)
+endif()
 
+if (raygui_FOUND)
+    set(RAYGUI_TARGET PkgConfig::raygui)
+else()
+    FetchContent_Declare(
+        raygui
+        URL https://github.com/raysan5/raygui/archive/refs/tags/${RAYGUI_VERSION}.tar.gz
+    )
+    FetchContent_MakeAvailable(raygui)
+
+    add_library(raygui_headers INTERFACE)
+    target_include_directories(raygui_headers INTERFACE
+        "${raygui_SOURCE_DIR}/src"
+    )
+    set(RAYGUI_TARGET raygui_headers)
+endif()
+
+FetchContent_MakeAvailable(raylib)
 
 
 # === Our project ===
@@ -58,14 +80,10 @@ add_subdirectory(src)
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY
-    VS_DEBUGGER_WORKING_DIRECTORY $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
-
-# --- Target link with raylib ---
+# --- Target link with dependencies ---
 set(raylib_VERBOSE 1)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
-
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib ${RAYGUI_TARGET})
 
 
 # === Platform specific configurations ===

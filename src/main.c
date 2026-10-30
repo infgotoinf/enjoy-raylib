@@ -1,45 +1,84 @@
-#include "raylib.h"
+#include <stdio.h>
 
-#include "resource_dir.h"  // utility header for SearchAndSetResourceDir
+#include "raylib.h"
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
+
+
+
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 574
+#define FPS 60
+
+#define GUI_TEXT_SIZE 20
+#define GUI_TEXT_MARGIN 10
+
+
 
 int main ()
 {
-    // Tell the window to use vsync and work on high DPI displays
-    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+    // Set window config flags
+    SetConfigFlags(
+            FLAG_VSYNC_HINT          // Set to try enabling V-Sync on GPU
+            | FLAG_WINDOW_HIGHDPI    // Set to support HighDPI
+            // | FLAG_MSAA_4X_HINT      // Set to try enabling MSAA 4x (will smooth image, but may cause issues)
+            // | FLAG_FULLSCREEN_MODE   // Set to run program in fullscreen
+            // | FLAG_WINDOW_RESIZABLE  // Set to allow resizable window
+            // | FLAG_WINDOW_ALWAYS_RUN // Set to allow windows running while minimized
+            // | FLAG_WINDOW_MINIMIZED  // Set to minimize window (iconify)
+            // | FLAG_WINDOW_MAXIMIZED  // Set to maximize window (expanded to monitor)
+    );
+
+    SetTargetFPS(FPS);
 
     // Create the window and OpenGL context
-    InitWindow(800, 600, "Hello Raylib");
+    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World from Raylib");
 
-    // Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
-    SearchAndSetResourceDir("resources");
+    // Set text size for raygui elements
+    GuiSetStyle(DEFAULT, TEXT_SIZE, GUI_TEXT_SIZE);
 
     // Load a texture from the resources directory
-    Texture wabbit = LoadTexture("wabbit_alpha.png");
+    Texture logo = LoadTexture("resources/logo.png");
+    if (!IsTextureValid(logo)) {
+        printf("Couldn't load Texture!");
+        return 0;
+    }
 
-    // game loop
+    static bool show_text = false;
+
+    // Game loop
     while (!WindowShouldClose())  // run the loop until the user presses ESCAPE or presses the Close button on the window
     {
-        // drawing
+        // Drawing
         BeginDrawing();
 
-        // Setup the back buffer for drawing (clear color and depth buffers)
-        ClearBackground(BLACK);
+            ClearBackground(DARKGRAY);
 
-        // draw some text using the default font
-        DrawText("Hello World!", 200, 200, 20, WHITE);
+            Vector2 logo_pos = { (WINDOW_WIDTH - logo.width) * 0.5, 100 };
+            DrawTexture(logo, logo_pos.x, logo_pos.y, WHITE);
 
-        // draw our texture to the screen
-        DrawTexture(wabbit, 400, 200, WHITE);
+            static int BUTTON_WIDTH = 200;
+            if (GuiButton((Rectangle){ logo_pos.x + logo.width * 0.5 - BUTTON_WIDTH * 0.5
+                                     , logo_pos.y + logo.height + 100
+                                     , BUTTON_WIDTH
+                                     , GUI_TEXT_SIZE + GUI_TEXT_MARGIN }, "Play"))
+            {
+                show_text = !show_text;
+            }
 
-        // end the frame and get ready for the next one (display frame, poll input, etc...)
+            if (show_text)
+            {
+                DrawText("Hello, World!", 200, WINDOW_HEIGHT - 100, GUI_TEXT_SIZE, WHITE);
+            }
+
         EndDrawing();
     }
 
-    // cleanup
-    // unload our texture so it can be cleaned up
-    UnloadTexture(wabbit);
+    // Cleanup
+    // Unload our texture so it can be cleaned up
+    UnloadTexture(logo);
 
-    // destroy the window and cleanup the OpenGL context
+    // Destroy the window and cleanup the OpenGL context
     CloseWindow();
     return 0;
 }
