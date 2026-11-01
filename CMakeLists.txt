@@ -114,28 +114,39 @@ endif()
 
 
 
-# === Copying resources ===
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/resources"
-            "$<TARGET_FILE_DIR:${PROJECT_NAME}>/resources"
-)
+# === Copying assets ===
+if (NOT ("${PLATFORM}" STREQUAL "Web"))
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "${CMAKE_SOURCE_DIR}/${ASSETS_DIR}"
+                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${ASSETS_DIR}"
+    )
+endif()
 
 
 # === OS and PLATFORM specific configurations ===
 if ("${PLATFORM}" STREQUAL "Web")
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
-    target_link_options(${PROJECT_NAME}
-        PUBLIC
+    target_link_libraries(${PROJECT_NAME}
+        PRIVATE
             "-sUSE_GLFW=3"
-            "--preload-file ${CMAKE_SOURCE_DIR}/resources"
-            # "-sTOTAL_MEMORY=${BUILD_WEB_HEAP_SIZE}"
-            # "-sSTACK_SIZE=${BUILD_WEB_STACK_SIZE}"
+            "--preload-file ${CMAKE_SOURCE_DIR}/${ASSETS_DIR}@/${ASSETS_DIR}"
             "-sFORCE_FILESYSTEM=1"
             "-sMINIFY_HTML=0"
-
     )
+    if ("${BUILD_TYPE}" STREQUAL "Debug")
+        target_link_libraries(${PROJECT_NAME}
+            PRIVATE
+                "-sASSERTIONS=2"
+                "--profiling"
+        )
+    elseif ("${BUILD_TYPE}" STREQUAL "Release")
+        target_link_libraries(${PROJECT_NAME}
+            PRIVATE
+                "--shell-file ${CMAKE_SOURCE_DIR}/resources/minshell.html"
+        )
+    endif()
 elseif ("${PLATFORM}" STREQUAL "Desktop")
     if (WIN32)
     elseif (APPLE)

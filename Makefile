@@ -10,6 +10,8 @@ PROJECT_LANGUAGE ?= C
 PLATFORM   ?= Web
 BUILD_TYPE ?= Debug
 # BUILD_TYPE ?= Release
+BUILD_DIR  ?= build/$(PLATFORM)/$(BUILD_TYPE)
+ASSETS_DIR ?= assets
 
 # --- Dependencies ---
 USE_RAYLIB ?= TRUE
@@ -28,7 +30,6 @@ RAYGUI_VERSION ?= 5.0
 CMAKE_C_STANDARD   ?= 23
 CMAKE_CXX_STANDARD ?= 23
 CMAKE_GENERATOR    ?= Ninja
-BUILD_DIR ?= build/$(PLATFORM)/$(BUILD_TYPE)
 
 # PLATFORM and OS specific logic
 ifeq ($(PLATFORM),Web)
@@ -43,7 +44,7 @@ all: help
 
 build:
 	$(CMAKE_COMMAND) -B $(BUILD_DIR) -DPROJECT_NAME=$(PROJECT_NAME) -DPROJECT_LANGUAGE=$(PROJECT_LANGUAGE) \
-		-DPLATFORM=$(PLATFORM) -DBUILD_TYPE=$(BUILD_TYPE) \
+		-DPLATFORM=$(PLATFORM) -DBUILD_TYPE=$(BUILD_TYPE) -DASSETS_DIR=$(ASSETS_DIR) \
 		-DUSE_RAYLIB=$(USE_RAYLIB) -DUSE_RAYGUI=$(USE_RAYGUI) \
 		-DRAYLIB_VERSION=$(RAYLIB_VERSION) -DRAYGUI_VERSION=$(RAYGUI_VERSION) \
 		-DCMAKE_C_COMPILER_LAUNCHER=$(CMAKE_C_COMPILER_LAUNCHER) -DCMAKE_CXX_COMPILER_LAUNCHER=$(CMAKE_CXX_COMPILER_LAUNCHER) \
@@ -51,10 +52,10 @@ build:
 	cmake --build $(BUILD_DIR)
 
 ifeq ($(PLATFORM),Web)
-run:
+run: build
 	emrun $(BUILD_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME).html
 else
-run:
+run: build
 	cd $(BUILD_DIR)/$(PROJECT_NAME) && ./$(PROJECT_NAME)
 endif
 
@@ -67,7 +68,7 @@ help:
 	@echo ""
 	@echo "Commands:"
 	@echo "  build  Build project"
-	@echo "  run    Run executable with this PROJECT_NAME"
+	@echo "  run    Build and run executable"
 	@echo "  clean  Remove build folder"
 	@echo "  help   Prints this message"
 	@echo ""
@@ -88,6 +89,9 @@ help:
 	@echo ""
 	@echo "  BUILD_DIR         Directory where the project will be built"
 	@echo "                    Current value: $(BUILD_DIR)"
+	@echo ""
+	@echo "  ASSETS_DIR        Directory with project assets"
+	@echo "                    Current value: $(ASSETS_DIR)"
 	@echo ""
 	@echo "Dependencies:"
 	@echo "  USE_RAYLIB  Whatever use or not to use raylib, a simple and easy-to-use library to enjoy videogames programming"
@@ -114,7 +118,7 @@ help:
 	@echo ""
 	@echo "Examples:"
 	@echo "  make build"
-	@echo "  make build PLATFORM=Web"
 	@echo "  make build BUILD_TYPE=Release"
-	@echo "  make build PLATFORM=Web BUILD_TYPE=Release"
+	@echo "  make run PLATFORM=Web"
+	@echo "  make run PLATFORM=Web BUILD_TYPE=Release"
 	@echo "  make clean"

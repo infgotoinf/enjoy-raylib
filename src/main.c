@@ -70,8 +70,6 @@ int main ()
             // | FLAG_WINDOW_MAXIMIZED  // Set to maximize window (expanded to monitor)
     );
 
-    SetTargetFPS(FPS);
-
     // Create the window and OpenGL context
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World from Raylib");
 
@@ -79,7 +77,7 @@ int main ()
     // GuiSetStyle(DEFAULT, TEXT_SIZE, GUI_TEXT_SIZE);
 
     // Load a texture from the resources directory
-    logo = LoadTexture("resources/logo.png");
+    logo = LoadTexture("assets/logo.png");
     if (!IsTextureValid(logo)) {
         printf("Couldn't load Texture!");
         return 0;
@@ -90,6 +88,8 @@ int main ()
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, FPS, 1);
 #else
+    SetTargetFPS(FPS);
+
     while (!WindowShouldClose()) // Detect window close button
     {
         UpdateDrawFrame();
