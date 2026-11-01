@@ -4,14 +4,55 @@
 // #define RAYGUI_IMPLEMENTATION
 // #include "raygui.h"
 
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>      // Emscripten library
+#endif
 
 
+// Defining constants
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 574
 #define FPS 60
 
 #define GUI_TEXT_SIZE 20
 #define GUI_TEXT_MARGIN 10
+
+
+
+// Defining global variables
+static Texture logo;
+
+
+
+static void UpdateDrawFrame()
+{
+    // Drawing
+    BeginDrawing();
+
+        ClearBackground(DARKGRAY);
+
+        Vector2 logo_pos = { (WINDOW_WIDTH - logo.width) * 0.5, 100 };
+        DrawTexture(logo, logo_pos.x, logo_pos.y, WHITE);
+
+        // Draw raygui button
+        // static bool show_text = false;
+        // static const int BUTTON_WIDTH = 200;
+        // if (GuiButton((Rectangle){ logo_pos.x + logo.width * 0.5 - BUTTON_WIDTH * 0.5
+        //                          , logo_pos.y + logo.height + 100
+        //                          , BUTTON_WIDTH
+        //                          , GUI_TEXT_SIZE + GUI_TEXT_MARGIN }, "Play"))
+        // {
+        //     show_text = !show_text;
+        // }
+        // if (show_text)
+        // {
+        //     DrawText("Hello, World!", 200, WINDOW_HEIGHT - 200, GUI_TEXT_SIZE, WHITE);
+        // }
+
+        DrawText("Hello, World!", 200, WINDOW_HEIGHT - 100, GUI_TEXT_SIZE, WHITE);
+
+    EndDrawing();
+}
 
 
 
@@ -38,42 +79,23 @@ int main ()
     // GuiSetStyle(DEFAULT, TEXT_SIZE, GUI_TEXT_SIZE);
 
     // Load a texture from the resources directory
-    Texture logo = LoadTexture("resources/logo.png");
+    logo = LoadTexture("resources/logo.png");
     if (!IsTextureValid(logo)) {
         printf("Couldn't load Texture!");
         return 0;
     }
 
-    static bool show_text = false;
 
-    // Game loop
-    while (!WindowShouldClose())  // run the loop until the user presses ESCAPE or presses the Close button on the window
+    // Main loop
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, FPS, 1);
+#else
+    while (!WindowShouldClose()) // Detect window close button
     {
-        // Drawing
-        BeginDrawing();
-
-            ClearBackground(DARKGRAY);
-
-            Vector2 logo_pos = { (WINDOW_WIDTH - logo.width) * 0.5, 100 };
-            DrawTexture(logo, logo_pos.x, logo_pos.y, WHITE);
-
-            // Draw raygui button
-            // static int BUTTON_WIDTH = 200;
-            // if (GuiButton((Rectangle){ logo_pos.x + logo.width * 0.5 - BUTTON_WIDTH * 0.5
-            //                          , logo_pos.y + logo.height + 100
-            //                          , BUTTON_WIDTH
-            //                          , GUI_TEXT_SIZE + GUI_TEXT_MARGIN }, "Play"))
-            // {
-            //     show_text = !show_text;
-            // }
-            // if (show_text)
-            // {
-            //     DrawText("Hello, World!", 200, WINDOW_HEIGHT - 200, GUI_TEXT_SIZE, WHITE);
-            // }
-            DrawText("Hello, World!", 200, WINDOW_HEIGHT - 100, GUI_TEXT_SIZE, WHITE);
-
-        EndDrawing();
+        UpdateDrawFrame();
     }
+#endif
+
 
     // Cleanup
     // Unload our texture so it can be cleaned up

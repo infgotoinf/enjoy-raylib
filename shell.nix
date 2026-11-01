@@ -3,7 +3,7 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     libGL
     raylib
-    raygui
+    # raygui
 
     # X11 dependencies
     libX11
@@ -14,20 +14,18 @@ pkgs.mkShell {
     libXrandr
 
     # Web support (uncomment to enable)
-    # pkgs.emscripten
+    emscripten
 
+    gcc
     cmake
     gnumake
     ninja
-    ccache
+    # ccache
     pkg-config
     pkgconf
 
     clang-tools
   ];
-
-  CMAKE_C_COMPILER_LAUNCHER = "ccache";
-  CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
 
   # Audio dependencies
   LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [pkgs.alsa-lib];

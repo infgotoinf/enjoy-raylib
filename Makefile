@@ -1,49 +1,62 @@
 .PHONY: build run clean help
 
 
-# Project configuration
+# === Project configuration ===
+# --- Variables ---
 PROJECT_NAME     ?= game
 PROJECT_LANGUAGE ?= C
 # PROJECT_LANGUAGE ?= C++
-
-PLATFORM   ?= Desktop
-# PLATFORM   ?= Web
+# PLATFORM   ?= Desktop
+PLATFORM   ?= Web
 BUILD_TYPE ?= Debug
 # BUILD_TYPE ?= Release
 
-# Changes might not apply after you set some dependency to false if you use ccache for compilation.
-# If so, you can make some changes to the code where the dependency was used (so it forces itself to recompile)
-# Or clear the cache with: ccache -C
+# --- Dependencies ---
 USE_RAYLIB ?= TRUE
 # USE_RAYGUI ?= TRUE
 USE_RAYGUI ?= FALSE
 
+# --- Dependency settings ---
 # https://github.com/raysan5/raylib/releases
 RAYLIB_VERSION ?= 6.2
 # https://github.com/raysan5/raygui/releases
 RAYGUI_VERSION ?= 5.0
 
-CMAKE_C_COMPILER_LAUNCHER   ?= ccache
-CMAKE_CXX_COMPILER_LAUNCHER ?= ccache
+# --- CMake variables ---
+# CMAKE_C_COMPILER_LAUNCHER   ?= ccache
+# CMAKE_CXX_COMPILER_LAUNCHER ?= ccache
 CMAKE_C_STANDARD   ?= 23
 CMAKE_CXX_STANDARD ?= 23
 CMAKE_GENERATOR    ?= Ninja
-BUILD_DIR ?= build
+BUILD_DIR ?= build/$(PLATFORM)/$(BUILD_TYPE)
+
+# PLATFORM and OS specific logic
+ifeq ($(PLATFORM),Web)
+  CMAKE_COMMAND = emcmake cmake
+else
+  CMAKE_COMMAND = cmake
+endif
 
 
 # Makefile commands
 all: help
 
 build:
-	cmake -B $(BUILD_DIR) -DPROJECT_NAME=$(PROJECT_NAME) -DPROJECT_LANGUAGE=$(PROJECT_LANGUAGE) \
+	$(CMAKE_COMMAND) -B $(BUILD_DIR) -DPROJECT_NAME=$(PROJECT_NAME) -DPROJECT_LANGUAGE=$(PROJECT_LANGUAGE) \
 		-DPLATFORM=$(PLATFORM) -DBUILD_TYPE=$(BUILD_TYPE) \
 		-DUSE_RAYLIB=$(USE_RAYLIB) -DUSE_RAYGUI=$(USE_RAYGUI) \
 		-DRAYLIB_VERSION=$(RAYLIB_VERSION) -DRAYGUI_VERSION=$(RAYGUI_VERSION) \
-		-DCMAKE_C_COMPILER_LAUNCHER=$(CMAKE_C_COMPILER_LAUNCHER) -DCMAKE_CXX_COMPILER_LAUNCHER=$(CMAKE_CXX_COMPILER_LAUNCHER) -DCMAKE_C_STANDARD=$(CMAKE_C_STANDARD) -DCMAKE_CXX_STANDARD=$(CMAKE_CXX_STANDARD) -DCMAKE_GENERATOR=$(CMAKE_GENERATOR)
+		-DCMAKE_C_COMPILER_LAUNCHER=$(CMAKE_C_COMPILER_LAUNCHER) -DCMAKE_CXX_COMPILER_LAUNCHER=$(CMAKE_CXX_COMPILER_LAUNCHER) \
+		-DCMAKE_C_STANDARD=$(CMAKE_C_STANDARD) -DCMAKE_CXX_STANDARD=$(CMAKE_CXX_STANDARD) -G $(CMAKE_GENERATOR)
 	cmake --build $(BUILD_DIR)
 
+ifeq ($(PLATFORM),Web)
+run:
+	emrun $(BUILD_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME).html
+else
 run:
 	cd $(BUILD_DIR)/$(PROJECT_NAME) && ./$(PROJECT_NAME)
+endif
 
 clean:
 	rm -rf $(BUILD_DIR)
