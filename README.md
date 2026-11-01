@@ -4,7 +4,7 @@ _NOTICE:_
 
 ---
 
-![$(Game Title)](./resources/logo.png)
+![$(Game Title)](./assets/logo.png)
 
 
 $(Game description)
