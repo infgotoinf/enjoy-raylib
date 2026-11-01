@@ -9,10 +9,10 @@ _NOTICE:_
 
 $(Game description)
 
-[Game Trailer](https://link)
-[YouTube Gameplayhttps://](link)
-[itch.io Release](https://link)
-[Steam Release](https://link)
+_[Game Trailer](https://link)_
+_[YouTube Gameplay](https://link)_
+_[itch.io Release](https://link)_
+_[Steam Release](https://link)_
 
 ## Build dependencies
 
