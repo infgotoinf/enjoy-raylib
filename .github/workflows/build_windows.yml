@@ -37,12 +37,14 @@ jobs:
     - name: Setup Environment
       uses: msys2/setup-msys2@v2
       with:
-        mysystem: UCRT64
+        msystem: UCRT64
         update: true
         install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja make mingw-w64-ucrt-x86_64-raylib
 
     - name: Build Product
       run: |
+        pwd
+        ls
         cd ${{ env.PROJECT_REPO_NAME }}
         make build PLATFORM=Desktop BUILD_MODE=Release
       shell: msys2 {0}
