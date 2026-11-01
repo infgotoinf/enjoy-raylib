@@ -21,7 +21,7 @@ $(Game description)
 You must install [MSYS2](https://www.msys2.org/) and launch **UCRT64** console in order to install dependencies and build the project:
 ```
 pacman -S mingw-w64-ucrt-x86_64-gcc \
-    mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja
+    mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja make
 ```
 
 Also you can optionally install raylib:
@@ -31,54 +31,21 @@ pacman -S mingw-w64-ucrt-x86_64-raylib
 
 ### Linux
 
-#### Arch
-
-```
-pacman -S
-```
-
-Also you can optionally install raylib:
-```
-pacman -S
-```
-
 #### Ubuntu
 
 ```
-apt install
+apt install build-essential make cmake ninja-build
 ```
 
 Also you can optionally install raylib:
 ```
 apt install
-```
-
-#### Fedora
-
-```
-dnf install
-```
-
-Also you can optionally install raylib:
-```
-dnf install
 ```
 
 #### NixOS
 
 ```
 nix-shell
-```
-
-### MacOS
-
-```
-brew install
-```
-
-Also you can optionally install raylib:
-```
-brew install
 ```
 
 ## Build instructions
