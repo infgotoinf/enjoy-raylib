@@ -40,7 +40,15 @@ jobs:
         version: 5.0.3
         actions-cache-folder: 'emsdk-cache'
 
+    - name: Setup Environment
+      uses: msys2/setup-msys2@v2
+      with:
+        mysystem: UCRT64
+        update: true
+        install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja make
+
     - name: Build Product
       run: |
         cd ${{ env.PROJECT_REPO_NAME }}
-        make PLATFORM=Web BUILD_MODE=Release
+        make build PLATFORM=Web BUILD_MODE=Release
+      shell: msys2 {0}
