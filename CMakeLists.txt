@@ -149,12 +149,23 @@ if ("${PLATFORM}" STREQUAL "Web")
     endif()
 elseif ("${PLATFORM}" STREQUAL "Desktop")
     if (WIN32)
+        target_link_libraries(${PROJECT_NAME}
+            PRIVATE
+                opengl32
+                gdi32
+                winmm
+                comdlg32
+                ole32
+        )
     elseif (APPLE)
         target_link_libraries(${PROJECT_NAME}
             PRIVATE
-                "-framework IOKit"
-                "-framework Cocoa"
                 "-framework OpenGL"
+                "-framework Cocoa"
+                "-framework IOKit"
+                "-framework CoreAudio"
+                "-framework CoreVideo"
+                "-framework QuartzCore"
         )
     else()
         target_link_libraries(${PROJECT_NAME}
