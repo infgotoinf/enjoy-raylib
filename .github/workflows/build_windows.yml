@@ -44,5 +44,5 @@ jobs:
     - name: Build Product
       run: |
         cd ${{ env.PROJECT_REPO_NAME }}
-        make build PLATFORM=Desktop BUILD_MODE=Release
+        make build PLATFORM=Desktop BUILD_TYPE=Release
       shell: msys2 {0}

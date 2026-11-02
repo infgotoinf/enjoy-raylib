@@ -42,5 +42,7 @@ jobs:
 
     - name: Build Product
       run: |
+        gcc --version
         cd ${{ env.PROJECT_REPO_NAME }}
-        make build PLATFORM=Desktop BUILD_MODE=Release
+        make build PLATFORM=Desktop BUILD_TYPE=Release
+      shell: bash
