@@ -6,8 +6,8 @@
 PROJECT_NAME     ?= game
 PROJECT_LANGUAGE ?= C
 # PROJECT_LANGUAGE ?= C++
-# PLATFORM   ?= Desktop
-PLATFORM   ?= Web
+PLATFORM   ?= Desktop
+# PLATFORM   ?= Web
 BUILD_TYPE ?= Debug
 # BUILD_TYPE ?= Release
 BUILD_DIR  ?= build/$(PLATFORM)/$(BUILD_TYPE)
@@ -19,6 +19,7 @@ USE_RAYLIB ?= TRUE
 USE_RAYGUI ?= FALSE
 
 # --- Dependency settings ---
+# You will need to change URL_HASH in CMakeLists.txt after changing a version
 # https://github.com/raysan5/raylib/releases
 RAYLIB_VERSION ?= 6.2
 # https://github.com/raysan5/raygui/releases
