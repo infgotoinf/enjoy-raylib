@@ -41,5 +41,8 @@ jobs:
     - run: |
         cd ${{ env.PROJECT_REPO_NAME }}
         nix-shell
-        make build PLATFORM=Desktop BUILD_TYPE=Release
+
+    - name: Build Product
+      run: |
+        nix-shell --command "make build PLATFORM=Desktop BUILD_TYPE=Release"
       shell: bash
