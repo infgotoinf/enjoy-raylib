@@ -1,5 +1,3 @@
-----
-
 _NOTICE:_
 
 This repo provides an awesome base structure to start develop a game of any size in raylib:
