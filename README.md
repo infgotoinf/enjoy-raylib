@@ -30,11 +30,12 @@ This template was inspired and relied a lot on the [official raylib gamejam temp
 
 Enjoy 😎 🤙
 
-After you done making your game don't forget to edit `LICENSE` and this `README.md`, then you're done, delete this notice.
+> [!IMPORTANT]
+> After you are done making your game don't forget to edit `LICENSE` and this `README.md`, then delete this notice.
 
 ---
 
-<!-- Then README.md is done delete everything above till here, including this line -->
+<!-- Then README.md is done delete everything above till here, incuding this comment -->
 ![$(Game Title)](./assets/logo.png)
 
 $(Game description)
