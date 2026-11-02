@@ -24,7 +24,7 @@ This template was inspired and relied a lot on the [official raylib gamejam temp
 
 1. On GitHub page find a button "Use this template" or install `github-cli` and run something like this:
     ```shell
-    gh repo create -c -p https://github.com/infgotoinf/godlike-raylib-template <YOUR-REPO-NAME> --public
+    gh repo create -c -p https://github.com/infgotoinf/enjoy-raylib <YOUR-REPO-NAME> --public
     ```
 2. Edit project information in the `Makefile`.
 3. Then install [build dependencies](#build-dependencies).
