@@ -38,9 +38,6 @@ jobs:
       uses: cachix/install-nix-action@v31
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: |
-        cd ${{ env.PROJECT_REPO_NAME }}
-        nix-shell
 
     - name: Build Product
       run: |
