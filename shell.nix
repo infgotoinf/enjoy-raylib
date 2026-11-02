@@ -21,10 +21,10 @@ pkgs.mkShell {
     gnumake
     ninja
     # ccache
-    pkg-config
-    pkgconf
+    # pkg-config
+    # pkgconf
 
-    clang-tools
+    # clang-tools
   ];
 
   # Audio dependencies
