@@ -16,7 +16,7 @@ Features:
 - Ability to set CMAKE_GENERATOR, CMAKE_C_COMPILE_LAUNCHER and CMAKE_CXX_COMPILE_LAUNCHER, change C and C++ standard
 - `make help` with useful information
 
-This template was inspired and relied a lot on the [official raylib gamejam template](https://github.com/raysan5/raylib-gamejam-template), tho it was almost entierely rethought and reinvented to make much more sense (at least for me), be easier to maintain and easier to scale.
+This template was inspired and relied a lot on the [official raylib gamejam template](https://github.com/raysan5/raylib-gamejam-template), tho it was almost entierely rethought and rewritten to make much more sense (at least for me), be easier to maintain and easier to scale.
 
 ### How to start with this template
 
