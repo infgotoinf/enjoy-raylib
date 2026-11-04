@@ -42,8 +42,8 @@ $(Game description)
 
 $(Game screenshots)
 
-_[Game Trailer](https://link)_
-_[YouTube Gameplay](https://link)_
+_[![YouTube trailer](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)_
+_[![YouTube Gameplay](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)_
 _[itch.io Release](https://link)_
 _[Steam Release](https://link)_
 
