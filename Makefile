@@ -40,7 +40,7 @@ else
 endif
 
 
-# Makefile commands
+# Makefile targets
 all: help
 
 build:
@@ -66,7 +66,7 @@ help:
 	@echo "Usage:"
 	@echo "  make <COMMAND> [VARIABLE=VALUE]"
 	@echo ""
-	@echo "Commands:"
+	@echo "Targets:"
 	@echo "  build  Build project"
 	@echo "  run    Build and run executable"
 	@echo "  clean  Remove build folder"
