@@ -21,6 +21,8 @@ pkgs.mkShell {
     gnumake
     ninja
     # ccache
+
+    # If you're using raygui package
     # pkg-config
     # pkgconf
 
