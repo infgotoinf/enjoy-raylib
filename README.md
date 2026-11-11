@@ -1,4 +1,4 @@
-_NOTICE:_
+NOTICE:_
 
 This repo provides an awesome base structure to start develop a game of any size in raylib:
 - `assets/` - for game assets, aka sounds, sprites, etc.
@@ -94,17 +94,25 @@ To view build options:
 make help
 ```
 
-## Libraries and other assets used
+## Made with
 
-- [Raylib](https://github.com/raysan5/raylib): Zlib
+### Librarries and other assets
+
+- [Raylib](https://www.raylib.com/index.html): Zlib
+- [Raygui](https://github.com/raysan5/raygui): Zlib
 - [$(Dependency)](https://link): $(License)
 - [$(Dependency)](https://link): $(License)
-- [$(Dependency)](https://link): $(License)
+
+### Programs
+
+- [Krita](https://krita.org/)
+- [$(Program)](https://link)
+- [$(Program)](https://link)
 
 ## Controls
 
 | Key | Action |
-|-----|--------|
+| --- | ------ |
 | $(Key) | $(Action) |
 | $(Key) | $(Action) |
 | $(Key) | $(Action) |
