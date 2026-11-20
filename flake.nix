@@ -19,7 +19,7 @@
           packages = with pkgs; [
             libGL
             raylib
-            # raygui
+            raygui
 
             # X11 dependencies
             libX11
@@ -39,8 +39,8 @@
             # ccache
 
             # For raygui package
-            # pkg-config
-            # pkgconf
+            pkg-config
+            pkgconf
 
             # clang-tools # For LSP
             gdb-dashboard # For debug

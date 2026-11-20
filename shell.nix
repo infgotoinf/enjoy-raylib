@@ -3,7 +3,7 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     libGL
     raylib
-    # raygui
+    raygui
 
     # X11 dependencies
     libX11
@@ -20,9 +20,8 @@ pkgs.mkShell {
     cmake
     gnumake
     ninja
-    # ccache
-    # pkg-config
-    # pkgconf
+    pkg-config
+    pkgconf
 
     # clang-tools
   ];
