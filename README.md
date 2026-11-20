@@ -34,6 +34,11 @@ Enjoy 😎 🤙
 > After you are done making your game don't forget to edit `LICENSE` and this `README.md`, then delete this notice.
 
 ---
+<!-- Replace my username (infgotoinf) and repo name (enjoy-raylib) with yours -->
+[![Build Project - Linux](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_linux.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_linux.yml)
+[![Build Project - Windows](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_windows.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_windows.yml)
+[![Build Project - WebAssembly](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_webassembly.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_webassembly.yml)
+
 
 <!-- Then README.md is done delete everything above till here, incuding this comment -->
 ![$(Game Title)](./assets/logo.png)
@@ -55,11 +60,11 @@ You must install [MSYS2](https://www.msys2.org/) and launch **UCRT64** console i
 ```
 pacman -S mingw-w64-ucrt-x86_64-gcc \
     mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja make \
-    mingw-w64-ucrt-x86_64-raylib mingw-w64-ucrt-x86_64-emscripten
+    mingw-w64-ucrt-x86_64-emscripten
 ```
 
 > [!NOTE]
-> Raylib is optional (it get fetched if not found). You need emscripten only if you build for the Web.
+> You can use Raylib package unless you are on Windows. You need emscripten only if you build for the Web.
 
 ### Unix
 
@@ -69,8 +74,10 @@ Follow [official raylib guide](https://github.com/raysan5/raylib/wiki/Working-on
 
 #### NixOS
 
+Install [direnv](https://github.com/nix-community/nix-direnv) and run inside project folder:
+
 ```
-nix-shell
+direnv allow
 ```
 
 #### MacOS
@@ -94,12 +101,20 @@ To view build options:
 make help
 ```
 
-## Libraries and other assets used
+## Made with
 
-- [Raylib](https://github.com/raysan5/raylib): Zlib
+### Libraries and other assets
+
+- [Raylib](https://www.raylib.com/index.html): Zlib
+- [Raygui](https://github.com/raysan5/raygui): Zlib
 - [$(Dependency)](https://link): $(License)
 - [$(Dependency)](https://link): $(License)
-- [$(Dependency)](https://link): $(License)
+
+### Programs
+
+- [Krita](https://krita.org/)
+- [$(Program)](https://link)
+- [$(Program)](https://link)
 
 ## Controls
 
