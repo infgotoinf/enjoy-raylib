@@ -7,10 +7,15 @@ build
 # Debugger
 .gdb_history
 
+# NixOS
+.direnv
 
 # Krita specific
-resources*/*autosave.kra
-resources*/*~
+*autosave.kra
+*~
+
+# Blender specific
+*.blend1
 
 # Renoise specific
-resources*/*.time-report.txt
+*.time-report.txt
