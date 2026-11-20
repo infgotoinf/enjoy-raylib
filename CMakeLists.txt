@@ -102,7 +102,7 @@ if (${USE_RAYGUI} STREQUAL "TRUE")
         FetchContent_MakeAvailable(raygui)
 
         add_library(raygui_headers INTERFACE)
-        target_include_directories(raygui_headers INTERFACE
+        target_include_directories(raygui_headers SYSTEM INTERFACE
             "${raygui_SOURCE_DIR}/src"
         )
         set(RAYGUI_TARGET raygui_headers)
@@ -148,7 +148,6 @@ if ("${PLATFORM}" STREQUAL "Web")
         )
     endif()
 elseif ("${PLATFORM}" STREQUAL "Desktop")
-    target_compile_options(${PROJECT_NAME} PRIVATE )
     target_compile_options(${PROJECT_NAME}
         PRIVATE
             -Wall            # Standard helpful warnings
@@ -157,7 +156,7 @@ elseif ("${PLATFORM}" STREQUAL "Desktop")
             -Wconversion     # Warns about implicit conversions that may alter values
             -Wshadow         # Warns if a local variable hides another variable
             -Wuninitialized  # Warns if you use a variable before setting a value
-            -Wformat         # Warns about format string issues in functions like printf
+            -Wformat=2       # Warns about format string issues in functions like printf/TraceLog
             -Werror          # Treat warning as errors
     )
 
