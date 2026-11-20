@@ -19,6 +19,18 @@ else()
     set(CMAKE_BUILD_TYPE "${BUILD_TYPE}")
 endif()
 
+# --- OS and PLATFORM specific configuration ---
+if ("${PLATFORM}" STREQUAL "Desktop")
+    # APPLE and BSD to clang, cause this is how it's done in the official raylib template
+    # if (APPLE OR BSD)
+    #     set(CMAKE_C_COMPILER   clang)
+    #     set(CMAKE_CXX_COMPILER clang++)
+    # else()
+        set(CMAKE_C_COMPILER   gcc)
+        set(CMAKE_CXX_COMPILER g++)
+    # endif()
+endif()
+
 if ("${PROJECT_LANGUAGE}" STREQUAL "C")
     project("${PROJECT_NAME}" C)
 elseif ("${PROJECT_LANGUAGE}" STREQUAL "C++")
@@ -37,19 +49,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json
 
 include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE) # Show download progress
-
-
-# --- OS and PLATFORM specific configuration ---
-if ("${PLATFORM}" STREQUAL "Desktop")
-    # APPLE and BSD to clang, cause this is how it's done in the official raylib template
-    if (APPLE OR BSD)
-        set(CMAKE_C_COMPILER   clang)
-        set(CMAKE_CXX_COMPILER clang++)
-    else()
-        set(CMAKE_C_COMPILER   gcc)
-        set(CMAKE_CXX_COMPILER g++)
-    endif()
-endif()
 
 
 
@@ -125,7 +124,8 @@ if (NOT ("${PLATFORM}" STREQUAL "Web"))
 endif()
 
 
-# === OS and PLATFORM specific configurations ===
+
+# === OS, PLATFORM and BUILD_TYPE specific configurations ===
 if ("${PLATFORM}" STREQUAL "Web")
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
     target_link_libraries(${PROJECT_NAME}
@@ -148,7 +148,21 @@ if ("${PLATFORM}" STREQUAL "Web")
         )
     endif()
 elseif ("${PLATFORM}" STREQUAL "Desktop")
+    target_compile_options(${PROJECT_NAME} PRIVATE )
+    target_compile_options(${PROJECT_NAME}
+        PRIVATE
+            -Wall            # Standard helpful warnings
+            -Wextra          # Extra warnings
+            -Wpedantic       # Enforces strict ISO compliance
+            -Wconversion     # Warns about implicit conversions that may alter values
+            -Wshadow         # Warns if a local variable hides another variable
+            -Wuninitialized  # Warns if you use a variable before setting a value
+            -Wformat         # Warns about format string issues in functions like printf
+            -Werror          # Treat warning as errors
+    )
+
     if (WIN32)
+        target_link_options(${PROJECT_NAME} PRIVATE -static)
         target_link_libraries(${PROJECT_NAME}
             PRIVATE
                 opengl32

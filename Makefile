@@ -15,7 +15,7 @@ ASSETS_DIR ?= assets
 
 # --- Dependencies ---
 USE_RAYLIB ?= TRUE
-# USE_RAYGUI ?= TRUE
+USE_RAYGUI ?= TRUE
 USE_RAYGUI ?= FALSE
 
 # --- Dependency settings ---
@@ -57,6 +57,11 @@ run: build
 else
 run: build
 	cd $(BUILD_DIR)/$(PROJECT_NAME) && ./$(PROJECT_NAME)
+
+ifeq ($(BUILD_TYPE),Debug)
+debrun: build
+	cd $(BUILD_DIR)/$(PROJECT_NAME) && gdb-dashboard $(PROJECT_NAME)
+endif
 endif
 
 clean:
@@ -67,10 +72,11 @@ help:
 	@echo "  make <COMMAND> [VARIABLE=VALUE]"
 	@echo ""
 	@echo "Targets:"
-	@echo "  build  Build project"
-	@echo "  run    Build and run executable"
-	@echo "  clean  Remove build folder"
-	@echo "  help   Prints this message"
+	@echo "  build   Build project"
+	@echo "  run     Build and run executable"
+	@echo "  debrun  Build and run executable in gdb-dashboard"
+	@echo "  clean   Remove build folder"
+	@echo "  help    Prints this message"
 	@echo ""
 	@echo "Variables:"
 	@echo "  PROJECT_NAME      The name of execautable"
