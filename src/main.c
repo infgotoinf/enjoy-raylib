@@ -2,7 +2,7 @@
 #include "raygui.h"
 
 #if defined(PLATFORM_WEB)
-    #include <emscripten/emscripten.h> // Emscripten library
+    #include <emscripten/emscripten.h>
 #endif
 
 

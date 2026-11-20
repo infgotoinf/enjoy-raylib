@@ -1,4 +1,4 @@
-_NOTICE:_
+NOTICE:_
 
 This repo provides an awesome base structure to start develop a game of any size in raylib:
 - `assets/` - for game assets, aka sounds, sprites, etc.
@@ -40,7 +40,7 @@ Enjoy 😎 🤙
 [![Build Project - WebAssembly](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_webassembly.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_webassembly.yml)
 
 
-<!-- Then README.md is done delete everything above till here, incuding this comment -->
+<!-- Then README.md is done delete everything above till here, including this comment -->
 ![$(Game Title)](./assets/logo.png)
 
 $(Game description)
@@ -119,7 +119,7 @@ make help
 ## Controls
 
 | Key | Action |
-|-----|--------|
+| --- | ------ |
 | $(Key) | $(Action) |
 | $(Key) | $(Action) |
 | $(Key) | $(Action) |
