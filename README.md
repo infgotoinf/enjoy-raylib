@@ -34,13 +34,13 @@ Enjoy 😎 🤙
 > After you are done making your game don't forget to edit `LICENSE` and this `README.md`, then delete this notice.
 
 ---
-<!-- Replace my username (infgotoinf) and repo name (enjoy-raylib) with yours -->
+<!-- Then README.md is done delete everything above till here, including this comment -->
+<!-- Replace my username (infgotoinf) and repo name (enjoy-raylib) with yours to get working CI/CD badges -->
 [![Build Project - Linux](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_linux.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_linux.yml)
 [![Build Project - Windows](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_windows.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_windows.yml)
 [![Build Project - WebAssembly](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_webassembly.yml/badge.svg)](https://github.com/infgotoinf/enjoy-raylib/actions/workflows/build_webassembly.yml)
 
 
-<!-- Then README.md is done delete everything above till here, including this comment -->
 ![$(Game Title)](./assets/logo.png)
 
 $(Game description)
@@ -54,6 +54,9 @@ _[Steam Release](https://link)_
 
 ## Build dependencies
 
+> [!NOTE]
+> You can use Raylib package unless you are on Windows. You need emscripten only if you build for the Web.
+
 ### Windows
 
 You must install [MSYS2](https://www.msys2.org/) and launch **UCRT64** console in order to install dependencies and build the project:
@@ -63,16 +66,11 @@ pacman -S mingw-w64-ucrt-x86_64-gcc \
     mingw-w64-ucrt-x86_64-emscripten
 ```
 
-> [!NOTE]
-> You can use Raylib package unless you are on Windows. You need emscripten only if you build for the Web.
-
-### Unix
-
-#### Generic GNU/Linux
+### Generic GNU/Linux
 
 Follow [official raylib guide](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
 
-#### NixOS
+### NixOS
 
 Install [direnv](https://github.com/nix-community/nix-direnv) and run inside project folder:
 
@@ -80,26 +78,15 @@ Install [direnv](https://github.com/nix-community/nix-direnv) and run inside pro
 direnv allow
 ```
 
-#### MacOS
+### MacOS
 
 Follow [official raylib guide](https://github.com/raysan5/raylib/wiki/Working-on-macOS)
 
 ## Build instructions
 
-To build the project on any platform:
-```
-make build
-```
-
-To run the project on any platform:
-```
-make run
-```
-
-To view build options:
-```
-make help
-```
+`make build` - build the game
+`make run` - run the game
+`make help` - view help options
 
 ## Made with
 
